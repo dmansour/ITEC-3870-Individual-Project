@@ -1,106 +1,175 @@
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
 
-import javax.swing.JPanel;
-
-public class DrawSnake extends JPanel implements KeyListener
+public class DrawSnake extends Canvas implements KeyListener
 {
-	int x = 0;
-	int y = 0;
-	int dx = 0;
-	int dy = 0;
+	int snakeX = 180;
+	int snakeY = 190;
+	boolean snakeUp = false;
+	boolean snakeDown = false;
+	boolean snakeLeft = false;
+	boolean snakeRight = false;
 
-	public int getX()
+	public int getSnakeX()
 	{
-		return x;
+		return snakeX;
 	}
 	
-	public int getY()
+	public int getSnakeY()
 	{
-		return y;
+		return snakeY;
+	}
+
+	public boolean isSnakeUp()
+	{
+		return snakeUp;
 	}
 	
-	public void moveDown()
+	public void setSnakeUp(boolean up)
 	{
-		dy += 5;
+		snakeUp = up;
 	}
 	
-	public void moveUp()
+	public boolean isSnakeDown()
 	{
-		dy -= 5;
+		return snakeDown;
 	}
 	
-	public void moveLeft()
+	public void setSnakeDown(boolean down)
 	{
-		dx -= 5;
+		snakeDown = down;
 	}
 	
-	public void moveRight()
+	public boolean isSnakeLeft()
 	{
-		dx += 5;
+		return snakeLeft;
 	}
 	
-	public void createDot(Graphics g)
+	public void setSnakeLeft(boolean left)
 	{
-		Random r = new Random();
+		snakeLeft = left;
+	}
+	
+	public boolean isSnakeRight()
+	{
+		return snakeRight;
+	}
+	
+	public void setSnakeRight(boolean right)
+	{
+		snakeRight = right;
+	}
+	
+	public void Move()
+	{
+		if (isSnakeUp() && snakeY > 0)
+		{
+			snakeY -= 5;
+			repaint();
+		}
 		
-		g.setColor(Color.BLACK);
+		if (isSnakeDown() && snakeY < 350)
+		{
+			snakeY += 5;
+			repaint();
+		}
 		
-		g.fillOval(r.nextInt(10), r.nextInt(10), 8, 8);
+		if (isSnakeRight() && snakeX < 375)
+		{
+			snakeX += 5;
+			repaint();
+		}
+		
+		if (isSnakeLeft() && snakeX > 0)
+		{
+			snakeX -= 5;
+			repaint();
+		}
 	}
-	
-	public void paintComponent(Graphics g)
+
+	public void paint(Graphics g)
 	{
-		super.paintComponent(g);
+		super.paint(g);
 		
 		g.setColor(Color.ORANGE);
-		
-		g.fillRect(dx, dy, 20, 20);
+
+		g.fillRect(getSnakeX(), getSnakeY(), 20, 20);
 	}
 
 	@Override
-	public void keyPressed(final KeyEvent e)
+	public void keyPressed(KeyEvent e)
 	{
-		Runnable r = new Runnable()
+		if (e.getKeyCode() == 38)
 		{
-			int code = e.getKeyCode();
-			
-			@Override
-			public void run() 
+			if (isSnakeDown() == false)
 			{
-				while (dy < 340)
-				{
-					try
-					{
-						if (code == KeyEvent.VK_DOWN)
-						{
-							moveDown();
-							repaint();
-							Thread.sleep(100);
-							System.out.println(dy);
-						}
-					}
-					catch (InterruptedException ie)
-					{
-						ie.printStackTrace();
-					}
-				}
+				setSnakeDown(false);
+				setSnakeLeft(false);
+				setSnakeRight(false);
+				setSnakeUp(true);
+				Move();
 			}
-
-		};
+		}
 		
-		Thread t1 = new Thread(r);
-		t1.start();
+		else if (e.getKeyCode() == 40)
+		{
+			if (isSnakeUp() == false)
+			{
+				setSnakeUp(false);
+				setSnakeLeft(false);
+				setSnakeRight(false);
+				setSnakeDown(true);
+				Move();
+			}
+		}
 		
+		else if (e.getKeyCode() == 39)
+		{
+			if (isSnakeLeft() == false)
+			{
+				setSnakeLeft(false);
+				setSnakeUp(false);
+				setSnakeDown(false);
+				setSnakeRight(true);
+				Move();
+			}
+		}
+		
+		else
+		{
+			if (isSnakeRight() == false)
+			{
+				setSnakeRight(false);
+				setSnakeUp(false);
+				setSnakeDown(false);
+				setSnakeLeft(true);
+				Move();
+			}
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) 
 	{
-		
+		if (e.getKeyCode() == 38)
+		{
+			setSnakeDown(false);
+		}
+		else if (e.getKeyCode() == 40)
+		{
+			setSnakeUp(false);
+		}
+		else if (e.getKeyCode() == 39)
+		{
+			setSnakeLeft(false);
+		}
+		else
+		{
+			setSnakeRight(false);
+		}
 	}
 
 	@Override
@@ -108,5 +177,4 @@ public class DrawSnake extends JPanel implements KeyListener
 	{
 		
 	}
-
 }
