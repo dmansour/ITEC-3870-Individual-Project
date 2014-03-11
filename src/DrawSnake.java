@@ -1,10 +1,11 @@
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.JPanel;
 
-public class DrawSnake extends Canvas implements KeyListener
+public class DrawSnake extends JPanel implements KeyListener
 {
 	int snakeX = 180;
 	int snakeY = 190;
@@ -12,6 +13,13 @@ public class DrawSnake extends Canvas implements KeyListener
 	boolean snakeDown = false;
 	boolean snakeLeft = false;
 	boolean snakeRight = false;
+	Food f = new Food();
+	
+	public DrawSnake()
+	{
+		setBackground(Color.BLACK);
+		setLayout(null);
+	}
 
 	public int getSnakeX()
 	{
@@ -93,15 +101,17 @@ public class DrawSnake extends Canvas implements KeyListener
 	public void paint(Graphics g)
 	{
 		super.paint(g);
+		f.draw(g);
 		
 		g.setColor(Color.ORANGE);
 
-		g.fillRect(getSnakeX(), getSnakeY(), 20, 20);
+		g.fillRect(snakeX, snakeY, 20, 20);
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
+		// Movement: UP
 		if (e.getKeyCode() == 38)
 		{
 			if (isSnakeDown() == false)
@@ -114,6 +124,7 @@ public class DrawSnake extends Canvas implements KeyListener
 			}
 		}
 		
+		// Movement: DOWN
 		else if (e.getKeyCode() == 40)
 		{
 			if (isSnakeUp() == false)
@@ -126,6 +137,7 @@ public class DrawSnake extends Canvas implements KeyListener
 			}
 		}
 		
+		// Movement: RIGHT
 		else if (e.getKeyCode() == 39)
 		{
 			if (isSnakeLeft() == false)
@@ -138,6 +150,7 @@ public class DrawSnake extends Canvas implements KeyListener
 			}
 		}
 		
+		// Movement: LEFT
 		else
 		{
 			if (isSnakeRight() == false)
@@ -154,21 +167,29 @@ public class DrawSnake extends Canvas implements KeyListener
 	@Override
 	public void keyReleased(KeyEvent e) 
 	{
+		// Movement: UP
 		if (e.getKeyCode() == 38)
 		{
 			setSnakeDown(false);
+			setSnakeUp(true);
 		}
+		// Movement: DOWN
 		else if (e.getKeyCode() == 40)
 		{
 			setSnakeUp(false);
+			setSnakeDown(true);
 		}
+		// Movement: RIGHT
 		else if (e.getKeyCode() == 39)
 		{
 			setSnakeLeft(false);
+			setSnakeRight(true);
 		}
+		// Movement: LEFT
 		else
 		{
 			setSnakeRight(false);
+			setSnakeLeft(true);
 		}
 	}
 
@@ -176,5 +197,10 @@ public class DrawSnake extends Canvas implements KeyListener
 	public void keyTyped(KeyEvent e) 
 	{
 		
+	}
+	
+	public Rectangle getBounds()
+	{
+		return new Rectangle(getSnakeX(), getSnakeY(), 20, 20);
 	}
 }
