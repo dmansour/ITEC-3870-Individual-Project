@@ -5,17 +5,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 
-public class DrawSnake extends JPanel implements KeyListener
+public class Snake extends JPanel implements KeyListener
 {
 	int snakeX = 180;
 	int snakeY = 190;
+	private final static int SNAKE_WIDTH = 20;
+	private final static int SNAKE_HEIGHT = 20;
 	boolean snakeUp = false;
 	boolean snakeDown = false;
 	boolean snakeLeft = false;
 	boolean snakeRight = false;
 	Food f = new Food();
 	
-	public DrawSnake()
+	public Snake()
 	{
 		setBackground(Color.BLACK);
 		setLayout(null);
@@ -72,14 +74,14 @@ public class DrawSnake extends JPanel implements KeyListener
 	}
 	
 	public void Move()
-	{
+	{	
 		if (isSnakeUp() && snakeY > 0)
 		{
 			snakeY -= 5;
 			repaint();
 		}
 		
-		if (isSnakeDown() && snakeY < 350)
+		if (isSnakeDown() && snakeY < 330)
 		{
 			snakeY += 5;
 			repaint();
@@ -101,11 +103,12 @@ public class DrawSnake extends JPanel implements KeyListener
 	public void paint(Graphics g)
 	{
 		super.paint(g);
+
 		f.draw(g);
 		
 		g.setColor(Color.ORANGE);
 
-		g.fillRect(snakeX, snakeY, 20, 20);
+		g.fillRect(getSnakeX(), getSnakeY(), SNAKE_WIDTH, SNAKE_HEIGHT);
 	}
 
 	@Override
@@ -171,24 +174,32 @@ public class DrawSnake extends JPanel implements KeyListener
 		if (e.getKeyCode() == 38)
 		{
 			setSnakeDown(false);
+			setSnakeLeft(false);
+			setSnakeRight(false);
 			setSnakeUp(true);
 		}
 		// Movement: DOWN
-		else if (e.getKeyCode() == 40)
+		if (e.getKeyCode() == 40)
 		{
 			setSnakeUp(false);
+			setSnakeLeft(false);
+			setSnakeRight(false);
 			setSnakeDown(true);
 		}
 		// Movement: RIGHT
-		else if (e.getKeyCode() == 39)
+		if (e.getKeyCode() == 39)
 		{
 			setSnakeLeft(false);
+			setSnakeUp(false);
+			setSnakeDown(false);
 			setSnakeRight(true);
 		}
 		// Movement: LEFT
-		else
+		if (e.getKeyCode() == 37)
 		{
 			setSnakeRight(false);
+			setSnakeUp(false);
+			setSnakeDown(false);
 			setSnakeLeft(true);
 		}
 	}
@@ -201,6 +212,7 @@ public class DrawSnake extends JPanel implements KeyListener
 	
 	public Rectangle getBounds()
 	{
-		return new Rectangle(getSnakeX(), getSnakeY(), 20, 20);
+		Rectangle r = new Rectangle(getSnakeX(), getSnakeY(), SNAKE_WIDTH, SNAKE_HEIGHT);
+		return r;
 	}
 }

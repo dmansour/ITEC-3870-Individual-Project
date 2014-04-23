@@ -3,22 +3,22 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
-public class Food 
+public class Food
 {
-	int foodX = 0;
-	int foodY = 0;
+	Random r = new Random();
+	int foodX = 150;
+	int foodY = 150;
 	Color colorList[] = {Color.RED, Color.BLUE, Color.CYAN, Color.PINK, Color.YELLOW,
 				     	 Color.GREEN, Color.WHITE, Color.MAGENTA, Color.ORANGE};
 	Color color;
-	Random r = new Random();
+	private final static int FOOD_WIDTH = 6;
+	private final static int FOOD_HEIGHT = 6;
 	
 	public Food()
 	{
-		foodY = r.nextInt(375) + 1;
-		foodX = r.nextInt(375) + 1;
 		color = colorList[r.nextInt(colorList.length)];
 	}
-	
+
 	public int getFoodX()
 	{
 		return foodX;
@@ -28,16 +28,21 @@ public class Food
 	{
 		return foodY;
 	}
+	
+	public Color getColor()
+	{
+		return color;
+	}
 
 	public void draw(Graphics g)
 	{
 		g.setColor(color);
-		g.fillOval(foodX, foodY, 6, 6);
+		g.fillRect(getFoodX(), getFoodY(), FOOD_WIDTH, FOOD_HEIGHT);
 	}
 	
 	public Rectangle getBounds()
 	{
-		return new Rectangle(getFoodX(), getFoodY(), 6, 6);
+		Rectangle r = new Rectangle(getFoodX(), getFoodY(), FOOD_WIDTH, FOOD_HEIGHT);
+		return r;
 	}
-	
 }
