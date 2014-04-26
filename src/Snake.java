@@ -5,29 +5,22 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 
-public class Snake extends JPanel implements KeyListener
+public class Snake implements KeyListener
 {
 	int snakeX = 180;
 	int snakeY = 190;
-	private final static int SNAKE_WIDTH = 20;
-	private final static int SNAKE_HEIGHT = 20;
+	final static int SNAKE_WIDTH = 20;
+	final static int SNAKE_HEIGHT = 20;
 	boolean snakeUp = false;
 	boolean snakeDown = false;
 	boolean snakeLeft = false;
 	boolean snakeRight = false;
-	Food f = new Food();
-	
-	public Snake()
-	{
-		setBackground(Color.BLACK);
-		setLayout(null);
-	}
 
 	public int getSnakeX()
 	{
 		return snakeX;
 	}
-	
+
 	public int getSnakeY()
 	{
 		return snakeY;
@@ -37,75 +30,67 @@ public class Snake extends JPanel implements KeyListener
 	{
 		return snakeUp;
 	}
-	
+
 	public void setSnakeUp(boolean up)
 	{
 		snakeUp = up;
 	}
-	
+
 	public boolean isSnakeDown()
 	{
 		return snakeDown;
 	}
-	
+
 	public void setSnakeDown(boolean down)
 	{
 		snakeDown = down;
 	}
-	
+
 	public boolean isSnakeLeft()
 	{
 		return snakeLeft;
 	}
-	
+
 	public void setSnakeLeft(boolean left)
 	{
 		snakeLeft = left;
 	}
-	
+
 	public boolean isSnakeRight()
 	{
 		return snakeRight;
 	}
-	
+
 	public void setSnakeRight(boolean right)
 	{
 		snakeRight = right;
 	}
-	
+
 	public void Move()
 	{	
 		if (isSnakeUp() && snakeY > 0)
 		{
 			snakeY -= 5;
-			repaint();
 		}
-		
+
 		if (isSnakeDown() && snakeY < 330)
 		{
 			snakeY += 5;
-			repaint();
 		}
-		
+
 		if (isSnakeRight() && snakeX < 375)
 		{
 			snakeX += 5;
-			repaint();
 		}
-		
+
 		if (isSnakeLeft() && snakeX > 0)
 		{
 			snakeX -= 5;
-			repaint();
 		}
 	}
-
-	public void paint(Graphics g)
+	
+	public void drawSnake(Graphics g)
 	{
-		super.paint(g);
-
-		f.draw(g);
-		
 		g.setColor(Color.ORANGE);
 
 		g.fillRect(getSnakeX(), getSnakeY(), SNAKE_WIDTH, SNAKE_HEIGHT);
@@ -126,7 +111,7 @@ public class Snake extends JPanel implements KeyListener
 				Move();
 			}
 		}
-		
+
 		// Movement: DOWN
 		else if (e.getKeyCode() == 40)
 		{
@@ -139,7 +124,7 @@ public class Snake extends JPanel implements KeyListener
 				Move();
 			}
 		}
-		
+
 		// Movement: RIGHT
 		else if (e.getKeyCode() == 39)
 		{
@@ -152,7 +137,7 @@ public class Snake extends JPanel implements KeyListener
 				Move();
 			}
 		}
-		
+
 		// Movement: LEFT
 		else
 		{
@@ -178,6 +163,7 @@ public class Snake extends JPanel implements KeyListener
 			setSnakeRight(false);
 			setSnakeUp(true);
 		}
+		
 		// Movement: DOWN
 		if (e.getKeyCode() == 40)
 		{
@@ -186,6 +172,7 @@ public class Snake extends JPanel implements KeyListener
 			setSnakeRight(false);
 			setSnakeDown(true);
 		}
+		
 		// Movement: RIGHT
 		if (e.getKeyCode() == 39)
 		{
@@ -194,6 +181,7 @@ public class Snake extends JPanel implements KeyListener
 			setSnakeDown(false);
 			setSnakeRight(true);
 		}
+		
 		// Movement: LEFT
 		if (e.getKeyCode() == 37)
 		{
@@ -207,9 +195,9 @@ public class Snake extends JPanel implements KeyListener
 	@Override
 	public void keyTyped(KeyEvent e) 
 	{
-		
+
 	}
-	
+
 	public Rectangle getBounds()
 	{
 		Rectangle r = new Rectangle(getSnakeX(), getSnakeY(), SNAKE_WIDTH, SNAKE_HEIGHT);
