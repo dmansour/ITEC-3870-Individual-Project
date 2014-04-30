@@ -1,21 +1,24 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Food
 {
 	Random r = new Random();
-	int foodX = r.nextInt(330);
-	int foodY = r.nextInt(330);
+	int foodX = 0;
+	int foodY = 0;
 	Color colorList[] = {Color.RED, Color.BLUE, Color.CYAN, Color.PINK, Color.YELLOW,
-				     	 Color.GREEN, Color.WHITE, Color.MAGENTA, Color.ORANGE};
-	Color color;
+				     	 Color.GREEN, Color.LIGHT_GRAY, Color.MAGENTA, Color.ORANGE};
+	static Color color;
 	final static int FOOD_WIDTH = 6;
 	final static int FOOD_HEIGHT = 6;
 
 	public Food()
 	{
+		foodX = r.nextInt(330) + 1;
+		foodY = r.nextInt(330) + 1;
 		color = colorList[r.nextInt(colorList.length)];
 	}
 	
@@ -29,7 +32,7 @@ public class Food
 		return foodY;
 	}
 
-	public Color getColor()
+	public static Color getColor()
 	{
 		return color;
 	}

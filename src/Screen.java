@@ -11,8 +11,8 @@ public class Screen extends JPanel
 	static Snake snake = new Snake();
 	static Food food = new Food();
 	static int count = 0;
-	static JLabel score;
-	static ArrayList<Graphics> foodItems = new ArrayList<Graphics>();
+	static JLabel scoreLabel;
+	static ArrayList<Food> foodItems = new ArrayList<Food>();
 	
 	public Screen()
 	{
@@ -21,15 +21,15 @@ public class Screen extends JPanel
 		setBackground(Color.BLACK);
 		setLayout(null);
 	}
-	
+
 	public static JLabel addLabel()
 	{
-		score = new JLabel();
+		scoreLabel = new JLabel();
 		
-		score.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		score.setHorizontalAlignment(SwingConstants.CENTER);
+		scoreLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-		return score;
+		return scoreLabel;
 	}
 	
 	public void paintComponent(Graphics g)
@@ -38,7 +38,7 @@ public class Screen extends JPanel
 		
 		// Draws Food Object
 		food.drawFood(g);
-
+		
 		// Draws Snake Object
 		snake.drawSnake(g);
 		
@@ -61,13 +61,14 @@ public class Screen extends JPanel
 		return count;
 	}
 	
-	public static void collision()
+	public void collision()
 	{
-		if(snake.getBounds().intersects(food.getBounds()))
+		if (snake.getBounds().contains(food.getBounds()))
 		{
 			count++;
 		}
 		
-		score.setText("Score: " + getScore());
+		scoreLabel.setText("Score: " + getScore());
+
 	}
 }

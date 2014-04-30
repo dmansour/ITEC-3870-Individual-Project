@@ -3,7 +3,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.JPanel;
 
 public class Snake implements KeyListener
 {
@@ -92,7 +91,7 @@ public class Snake implements KeyListener
 	public void drawSnake(Graphics g)
 	{
 		g.setColor(Color.ORANGE);
-
+		
 		g.fillRect(getSnakeX(), getSnakeY(), SNAKE_WIDTH, SNAKE_HEIGHT);
 	}
 
